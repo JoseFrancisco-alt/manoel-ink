@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "manoel-ink",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "5391", "-d", "manoel-ink"],
+      "port": 5391
+    }
+  ]
+}
