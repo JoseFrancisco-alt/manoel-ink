@@ -31,11 +31,10 @@ const HEALED = [
   { name: "Kazutora",  place: "Antebraço",    src: "img/cicatrizadas/c06.jpg" },
 ];
 
+// Do destaque "Disponíveis" do Instagram. size/price vazios = não aparece no card.
 const FLASHES = [
-  { name: "[Nome do flash]", size: "≈ 8 cm",  price: "[VALOR]", available: true,  img: "" },
-  { name: "[Nome do flash]", size: "≈ 12 cm", price: "[VALOR]", available: true,  img: "" },
-  { name: "[Nome do flash]", size: "≈ 15 cm", price: "[VALOR]", available: false, img: "" },
-  { name: "[Nome do flash]", size: "≈ 10 cm", price: "[VALOR]", available: true,  img: "" },
+  { name: "Frieren", from: "Sousou no Frieren", size: "", price: "R$ 250", available: true, img: "img/flashes/frieren.jpg" },
+  { name: "Akaza",   from: "Kimetsu no Yaiba",  size: "", price: "",       available: true, img: "img/flashes/akaza.jpg" },
 ];
 
 /* ========================================================= */
@@ -168,20 +167,31 @@ strip.innerHTML = HEALED.map((h, i) => `
 /* flashes */
 $("#flashGrid").innerHTML = FLASHES.map((f, i) => {
   const n = String(i + 1).padStart(2, "0");
-  const msg = `Oi, Manoel! Quero reservar o flash ${n} — ${f.name} (${f.size}).`;
+  const msg = `Oi, Manoel! Vi no site e quero reservar o flash ${f.name}${f.from ? ` (${f.from})` : ""}.`;
+  const details = [f.size, f.price || "Valor sob consulta"].filter(Boolean).join(" · ");
   return `
   <article class="flash reveal ${f.available ? "" : "reserved"}" style="transition-delay:${i * 70}ms">
-    ${media(f.img, `Desenho · flash ${n}`)}
+    <div class="flash-art">
+      <span class="flash-no">Nº ${n}</span>
+      ${media(f.img, `Desenho · flash ${n}`)}
+    </div>
     <div class="flash-meta">
-      <h3>${f.name}</h3>
+      <div><h3>${f.name}</h3>${f.from ? `<em>${f.from}</em>` : ""}</div>
       <span class="badge ${f.available ? "" : "off"}">${f.available ? "Disponível" : "Reservado"}</span>
     </div>
-    <small>${f.size} · ${f.price}</small>
+    <small>${details}</small>
     ${f.available
       ? `<a class="btn btn-red" href="${waLink(msg)}" target="_blank" rel="noopener">Quero esse</a>`
       : `<span class="btn">Já tem dono</span>`}
   </article>`;
 }).join("");
+$("#flashGrid").insertAdjacentHTML("beforeend", `
+  <a class="flash flash-cta reveal" href="#agendar" style="transition-delay:${FLASHES.length * 70}ms" data-cursor="Bora">
+    <span class="flash-no">Nº ${String(FLASHES.length + 1).padStart(2, "0")}</span>
+    <p>Nenhum te pegou?</p>
+    <strong>O próximo desenho pode ser o seu.</strong>
+    <span class="flash-cta-go">Pedir um exclusivo <b>→</b></span>
+  </a>`);
 
 /* formulário de orçamento */
 const fIdea = $("#fIdea"), fPlace = $("#fPlace"), fSize = $("#fSize"), fFile = $("#fFile");
