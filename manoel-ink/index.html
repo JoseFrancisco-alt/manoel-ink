@@ -103,21 +103,16 @@
   </section>
 
   <!-- CICATRIZADAS -->
-  <section class="section healed-wrap">
-    <div class="healed reveal">
-      <div class="healed-text">
-        <p class="kicker"><i>02</i> Cicatrizadas</p>
-        <h2 class="title title-sm">NO DIA E<br>MESES DEPOIS</h2>
-        <p>Tatuagem boa é a que continua bonita depois de cicatrizar. Arrasta pra comparar a foto do dia com a mesma peça cicatrizada.</p>
-        <div class="healed-pick" id="healedPick"></div>
+  <section class="healed-wrap">
+    <div class="healed-head">
+      <div>
+        <p class="kicker reveal"><i>02</i> Cicatrizadas</p>
+        <h2 class="title title-sm reveal">MESES DEPOIS,<br>CONTINUA BONITA</h2>
       </div>
-      <div class="compare" id="compare" data-cursor="Arraste">
-        <div class="compare-img after" data-label="Cicatrizada"></div>
-        <div class="compare-img before" data-label="Dia da sessão"></div>
-        <div class="compare-handle"><span></span></div>
-        <input type="range" min="0" max="100" value="50" aria-label="Comparar antes e depois" id="compareRange">
-      </div>
+      <p class="healed-sub" data-blur>Tatuagem boa é a que segue firme depois de cicatrizar. Fotos reais, várias enviadas pelos próprios clientes.</p>
     </div>
+    <div class="healed-strip" id="healedStrip" data-cursor="Arraste" tabindex="0" aria-label="Fotos de tatuagens cicatrizadas"></div>
+    <div class="healed-progress" aria-hidden="true"><span id="healedBar"></span></div>
   </section>
 
   <!-- FLASHES -->

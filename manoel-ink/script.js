@@ -21,10 +21,14 @@ const WORKS = [
   { title: "Homenagem ao BK",    place: "Braço · Retrato",                  cat: "blackwork", photos: ["img/t05-1.jpg"] },
 ];
 
+// Do destaque "Cicatrizadas" do Instagram (stories, formato 9:16).
 const HEALED = [
-  { name: "Peça 01", before: "", after: "" },
-  { name: "Peça 02", before: "", after: "" },
-  { name: "Peça 03", before: "", after: "" },
+  { name: "Blackwork", place: "Braço e mão",  src: "img/cicatrizadas/c01.jpg" },
+  { name: "Eevee",     place: "Panturrilha",  src: "img/cicatrizadas/c02.jpg" },
+  { name: "Floral",    place: "Costela",      src: "img/cicatrizadas/c03.jpg" },
+  { name: "Lucario",   place: "Panturrilha",  src: "img/cicatrizadas/c04.jpg" },
+  { name: "Sol e lua", place: "Antebraço",    src: "img/cicatrizadas/c05.jpg" },
+  { name: "Kazutora",  place: "Antebraço",    src: "img/cicatrizadas/c06.jpg" },
 ];
 
 const FLASHES = [
@@ -128,28 +132,38 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "ArrowLeft") step(-1);
 });
 
-/* cicatrizadas — comparador */
-const compare = $("#compare"), range = $("#compareRange");
-const before = $(".before", compare), after = $(".after", compare), handle = $(".compare-handle", compare);
-function setPos(v) { before.style.clipPath = `inset(0 ${100 - v}% 0 0)`; handle.style.left = `${v}%`; }
-range.addEventListener("input", () => setPos(range.value));
-function showHealed(i) {
-  const h = HEALED[i];
-  [[before, h.before], [after, h.after]].forEach(([el, src]) => {
-    el.style.backgroundImage = src ? `url("${src}")` : "";
-    el.classList.toggle("is-ph", !src);
+/* cicatrizadas — faixa de stories arrastável */
+const strip = $("#healedStrip");
+strip.innerHTML = HEALED.map((h, i) => `
+  <figure class="story reveal" style="transition-delay:${i * 60}ms">
+    <div class="story-bars">${HEALED.map((_, j) => `<i class="${j <= i ? "on" : ""}"></i>`).join("")}</div>
+    ${media(h.src, "Cicatrizada")}
+    <figcaption><b>${h.name}</b><span>${h.place} · cicatrizada</span></figcaption>
+  </figure>`).join("");
+{
+  let down = false, startX = 0, startScroll = 0, moved = false;
+  strip.addEventListener("pointerdown", (e) => {
+    if (e.pointerType !== "mouse") return;
+    down = true; moved = false; startX = e.clientX; startScroll = strip.scrollLeft;
+    strip.classList.add("dragging");
   });
-  document.querySelectorAll("#healedPick .chip").forEach((c, j) => c.classList.toggle("active", j === i));
+  addEventListener("pointermove", (e) => {
+    if (!down) return;
+    const dx = e.clientX - startX;
+    if (Math.abs(dx) > 3) moved = true;
+    strip.scrollLeft = startScroll - dx;
+  });
+  addEventListener("pointerup", () => { down = false; strip.classList.remove("dragging"); });
+  strip.addEventListener("click", (e) => { if (moved) e.preventDefault(); }, true);
+  const bar = $("#healedBar");
+  const upd = () => {
+    const max = strip.scrollWidth - strip.clientWidth;
+    bar.style.transform = `scaleX(${max > 0 ? 0.15 + 0.85 * (strip.scrollLeft / max) : 1})`;
+  };
+  strip.addEventListener("scroll", upd, { passive: true });
+  addEventListener("resize", upd);
+  upd();
 }
-$("#healedPick").innerHTML = HEALED.map((h, i) => `<button class="chip" data-i="${i}">${h.name}</button>`).join("");
-$("#healedPick").addEventListener("click", (e) => { const b = e.target.closest(".chip"); if (b) showHealed(+b.dataset.i); });
-showHealed(0);
-// pequena "dica" de interação quando aparece na tela
-new IntersectionObserver(([en], obs) => {
-  if (!en.isIntersecting) return;
-  obs.disconnect();
-  let t = 0; const id = setInterval(() => { t += 0.05; const v = 50 + Math.sin(t * 4) * 18 * Math.max(0, 1 - t); setPos(v); range.value = v; if (t >= 1) clearInterval(id); }, 16);
-}, { threshold: 0.6 }).observe(compare);
 
 /* flashes */
 $("#flashGrid").innerHTML = FLASHES.map((f, i) => {
