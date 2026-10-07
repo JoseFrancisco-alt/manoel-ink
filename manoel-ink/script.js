@@ -3,7 +3,8 @@
    e preencha "photos" com os caminhos (ex.: "img/t01-1.jpg").
    Lista vazia = mostra o placeholder.
    ========================================================= */
-const WHATSAPP = ""; // só números com DDI+DDD, ex.: "5582999999999"
+const WHATSAPP = ""; // só números com DDI+DDD, ex.: "5582999999999". Vazio = contato vai pro direct do Instagram.
+const INSTAGRAM = "manoel.ink";
 
 // Fotos tiradas do Instagram @manoel.ink (out/2026). Trocar pelos originais em alta quando ele mandar.
 const WORKS = [
@@ -41,7 +42,13 @@ const FLASHES = [
 /* ========================================================= */
 
 const $ = (s, el = document) => el.querySelector(s);
-const waLink = (text) => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
+const CHANNEL = WHATSAPP ? "wa" : "ig";
+document.documentElement.classList.add(`ch-${CHANNEL}`);
+// WhatsApp aceita texto no link; o direct do Instagram não, então lá a mensagem é copiada no clique.
+const waLink = (text) => CHANNEL === "wa"
+  ? `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`
+  : `https://ig.me/m/${INSTAGRAM}`;
+const msgAttr = (text) => `data-msg="${encodeURIComponent(text)}"`;
 const media = (src, label) => src
   ? `<img src="${src}" alt="${label}" loading="lazy">`
   : `<div class="ph"><span>${label}</span></div>`;
@@ -193,7 +200,7 @@ $("#flashGrid").innerHTML = FLASHES.map((f, i) => {
     </div>
     <small>${details}</small>
     ${f.available
-      ? `<a class="btn btn-red" href="${waLink(msg)}" target="_blank" rel="noopener">Quero esse</a>`
+      ? `<a class="btn btn-red" href="${waLink(msg)}" ${msgAttr(msg)} target="_blank" rel="noopener">Quero esse</a>`
       : `<span class="btn">Já tem dono</span>`}
   </article>`;
 }).join("");
@@ -213,18 +220,51 @@ function buildMsg() {
   if (fFile.files[0]) msg += `\n(Vou mandar a foto de referência aqui no chat)`;
   $("#msgPreview").textContent = msg;
   $("#waBtn").href = waLink(msg);
+  $("#waBtn").dataset.msg = encodeURIComponent(msg);
 }
 [fIdea, fPlace, fSize].forEach((el) => el.addEventListener("input", buildMsg));
 fFile.addEventListener("change", () => {
   const f = fFile.files[0];
   $("#uploadText").innerHTML = f
-    ? `<b>✓ ${f.name}</b> · anexe essa foto no WhatsApp depois de enviar`
+    ? `<b>✓ ${f.name}</b> · anexe essa foto na conversa depois de enviar a mensagem`
     : `<b>UPLOAD</b> · foto de referência (opcional)`;
   buildMsg();
 });
 buildMsg();
 $("#waFooter").href = waLink("Oi, Manoel!");
-$("#waFloat").href = WHATSAPP ? waLink("Oi, Manoel! Vim pelo site e quero fazer uma tattoo.") : "https://ig.me/m/manoel.ink";
+{
+  const hi = "Oi, Manoel! Vim pelo site e quero fazer uma tattoo.";
+  $("#waFloat").href = waLink(hi);
+  $("#waFloat").dataset.msg = encodeURIComponent(hi);
+}
+
+/* direct do Instagram: copia a mensagem antes de abrir */
+function copyText(text) {
+  if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text).catch(() => legacyCopy(text));
+  legacyCopy(text);
+  return Promise.resolve();
+}
+function legacyCopy(text) {
+  const t = document.createElement("textarea");
+  t.value = text; t.setAttribute("readonly", ""); t.style.cssText = "position:fixed;opacity:0;top:0";
+  document.body.append(t); t.select();
+  try { document.execCommand("copy"); } catch {}
+  t.remove();
+}
+let toastTimer;
+function toast(html) {
+  const el = $("#toast");
+  el.innerHTML = html; el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("show"), 4500);
+}
+document.addEventListener("click", (e) => {
+  if (CHANNEL !== "ig") return;
+  const a = e.target.closest("[data-msg]");
+  if (!a) return;
+  copyText(decodeURIComponent(a.dataset.msg));
+  toast(`<b>Mensagem copiada!</b> No direct do @${INSTAGRAM}, é só colar e enviar.`);
+});
 
 /* reveal on scroll */
 const io = new IntersectionObserver((entries) => {
