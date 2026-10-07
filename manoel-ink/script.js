@@ -22,13 +22,14 @@ const WORKS = [
 ];
 
 // Do destaque "Cicatrizadas" do Instagram (stories, formato 9:16).
+// before: foto do dia da sessão (ex.: "img/cicatrizadas/c02-dia.jpg"). Preenchida = o card vira antes/depois com barra de arrastar.
 const HEALED = [
-  { name: "Blackwork", place: "Braço e mão",  src: "img/cicatrizadas/c01.jpg" },
-  { name: "Eevee",     place: "Panturrilha",  src: "img/cicatrizadas/c02.jpg" },
-  { name: "Floral",    place: "Costela",      src: "img/cicatrizadas/c03.jpg" },
-  { name: "Lucario",   place: "Panturrilha",  src: "img/cicatrizadas/c04.jpg" },
-  { name: "Sol e lua", place: "Antebraço",    src: "img/cicatrizadas/c05.jpg" },
-  { name: "Kazutora",  place: "Antebraço",    src: "img/cicatrizadas/c06.jpg" },
+  { name: "Blackwork", place: "Braço e mão",  src: "img/cicatrizadas/c01.jpg", before: "" },
+  { name: "Eevee",     place: "Panturrilha",  src: "img/cicatrizadas/c02.jpg", before: "" },
+  { name: "Floral",    place: "Costela",      src: "img/cicatrizadas/c03.jpg", before: "" },
+  { name: "Lucario",   place: "Panturrilha",  src: "img/cicatrizadas/c04.jpg", before: "" },
+  { name: "Sol e lua", place: "Antebraço",    src: "img/cicatrizadas/c05.jpg", before: "" },
+  { name: "Kazutora",  place: "Antebraço",    src: "img/cicatrizadas/c06.jpg", before: "" },
 ];
 
 // Do destaque "Disponíveis" do Instagram. size/price vazios = não aparece no card.
@@ -134,15 +135,26 @@ document.addEventListener("keydown", (e) => {
 /* cicatrizadas — faixa de stories arrastável */
 const strip = $("#healedStrip");
 strip.innerHTML = HEALED.map((h, i) => `
-  <figure class="story reveal" style="transition-delay:${i * 60}ms">
+  <figure class="story reveal ${h.before ? "has-compare" : ""}" style="transition-delay:${i * 60}ms"${h.before ? ' data-cursor="Arraste"' : ""}>
     <div class="story-bars">${HEALED.map((_, j) => `<i class="${j <= i ? "on" : ""}"></i>`).join("")}</div>
-    ${media(h.src, "Cicatrizada")}
-    <figcaption><b>${h.name}</b><span>${h.place} · cicatrizada</span></figcaption>
+    ${h.before ? `
+      <div class="story-compare" style="--pos:50%">
+        ${media(h.src, "Cicatrizada")}
+        <div class="sc-before">${media(h.before, "No dia da sessão")}</div>
+        <span class="sc-tag sc-tag-l">No dia</span><span class="sc-tag sc-tag-r">Cicatrizada</span>
+        <div class="sc-handle" aria-hidden="true"></div>
+        <input type="range" min="0" max="100" value="50" aria-label="Comparar ${h.name}: no dia e cicatrizada">
+      </div>` : media(h.src, "Cicatrizada")}
+    <figcaption><b>${h.name}</b><span>${h.place} · ${h.before ? "antes e depois" : "cicatrizada"}</span></figcaption>
   </figure>`).join("");
+strip.querySelectorAll(".story-compare").forEach((c) => {
+  const r = c.querySelector("input");
+  r.addEventListener("input", () => c.style.setProperty("--pos", r.value + "%"));
+});
 {
   let down = false, startX = 0, startScroll = 0, moved = false;
   strip.addEventListener("pointerdown", (e) => {
-    if (e.pointerType !== "mouse") return;
+    if (e.pointerType !== "mouse" || e.target.closest(".story-compare")) return;
     down = true; moved = false; startX = e.clientX; startScroll = strip.scrollLeft;
     strip.classList.add("dragging");
   });
