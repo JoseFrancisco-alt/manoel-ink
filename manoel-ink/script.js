@@ -212,6 +212,7 @@ fFile.addEventListener("change", () => {
 });
 buildMsg();
 $("#waFooter").href = waLink("Oi, Manoel!");
+$("#waFloat").href = WHATSAPP ? waLink("Oi, Manoel! Vim pelo site e quero fazer uma tattoo.") : "https://ig.me/m/manoel.ink";
 
 /* reveal on scroll */
 const io = new IntersectionObserver((entries) => {
@@ -392,3 +393,10 @@ document.querySelectorAll("[data-count]").forEach((el) => countIO.observe(el));
   const logo = $("#footerLogo");
   logo.innerHTML = [..."MANOEL.INK"].map((ch) => `<span class="ch"${ch === "." ? ' style="color:var(--red)"' : ""}>${ch}</span>`).join("");
 })();
+
+/* WhatsApp flutuante aparece depois do hero */
+{
+  const wa = $("#waFloat");
+  const heroIO = new IntersectionObserver(([en]) => wa.classList.toggle("show", !en.isIntersecting), { threshold: 0.35 });
+  heroIO.observe(document.querySelector(".hero"));
+}

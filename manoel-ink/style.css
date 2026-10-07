@@ -521,3 +521,51 @@ body.loading { overflow: hidden; }
   .loader { display: none; }
   [data-blur] .w { filter: none; opacity: 1; transform: none; }
 }
+
+/* =========================================================
+   AJUSTES DA REUNIÃO (07/out)
+   ========================================================= */
+/* barra de cima: Flashes e Pedir orçamento em destaque */
+.nav-actions { display: flex; gap: 10px; align-items: center; }
+.nav-actions .btn { padding: 15px 22px; font-size: 16px; white-space: nowrap; }
+.lbl-sm { display: none; }
+.nav-flash { border-color: var(--ink); background: transparent; }
+.nav-flash:hover { background: var(--ink); color: var(--paper); }
+.nav-flash .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); box-shadow: 0 0 0 0 rgba(212,33,28,.6); animation: pulse 1.8s infinite; }
+@keyframes pulse { 70% { box-shadow: 0 0 0 8px rgba(212,33,28,0); } 100% { box-shadow: 0 0 0 0 rgba(212,33,28,0); } }
+@media (max-width: 860px) {
+  .nav-actions { margin-left: auto; gap: 6px; }
+  .nav-actions .btn { padding: 11px 13px; font-size: 14px; }
+  .nav-actions .nav-cta { display: inline-flex; }
+  .burger { margin-left: 0; }
+}
+@media (max-width: 420px) {
+  .logo { font-size: 18px; }
+  .nav-actions .btn { padding: 10px 10px; font-size: 13px; }
+  .nav-flash .dot { display: none; }
+  .lbl-lg { display: none; } .lbl-sm { display: inline; }
+}
+
+/* WhatsApp flutuante */
+.wa-float {
+  position: fixed; right: 20px; bottom: 20px; z-index: 60;
+  width: 62px; height: 62px; border-radius: 50%; display: grid; place-items: center;
+  background: #25d366; color: #fff; text-decoration: none;
+  box-shadow: 0 10px 30px -8px rgba(0,0,0,.45);
+  transform: translateY(120px) scale(.6); opacity: 0;
+  transition: transform .5s var(--ease), opacity .4s, box-shadow .3s;
+}
+.wa-float.show { transform: none; opacity: 1; }
+.wa-float::before {
+  content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid #25d366;
+  animation: waRing 2.4s var(--ease) infinite;
+}
+@keyframes waRing { from { transform: scale(1); opacity: .8; } to { transform: scale(1.6); opacity: 0; } }
+.wa-float:hover { box-shadow: 0 14px 34px -6px rgba(37,211,102,.7); }
+.wa-tip {
+  position: absolute; right: calc(100% + 12px); white-space: nowrap;
+  background: var(--ink); color: var(--paper); font: 700 14px var(--body); padding: 9px 13px; border-radius: 4px;
+  opacity: 0; transform: translateX(8px); transition: .3s var(--ease); pointer-events: none;
+}
+.wa-float:hover .wa-tip { opacity: 1; transform: none; }
+@media (max-width: 520px) { .wa-float { right: 14px; bottom: 14px; width: 56px; height: 56px; } }
