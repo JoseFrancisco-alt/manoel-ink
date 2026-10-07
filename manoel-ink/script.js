@@ -448,7 +448,20 @@ document.querySelectorAll("[data-count]").forEach((el) => countIO.observe(el));
 
 /* WhatsApp flutuante aparece depois do hero */
 {
-  const wa = $("#waFloat");
-  const heroIO = new IntersectionObserver(([en]) => wa.classList.toggle("show", !en.isIntersecting), { threshold: 0.35 });
-  heroIO.observe(document.querySelector(".hero"));
+  const wa = $("#waFloat"), bar = $("#ctaBar");
+  const hero = document.querySelector(".hero"), form = $("#agendar"), foot = document.querySelector(".footer");
+  // aparece depois do hero; a barra some quando o formulário ou o rodapé estão na tela
+  const sync = () => {
+    const vh = innerHeight;
+    const pastHero = hero.getBoundingClientRect().bottom < vh * 0.35;
+    const onScreen = (el) => { const r = el.getBoundingClientRect(); return r.top < vh * 0.85 && r.bottom > vh * 0.15; };
+    const atForm = onScreen(form) || onScreen(foot);
+    wa.classList.toggle("show", pastHero);
+    bar.classList.toggle("show", pastHero && !atForm);
+  };
+  addEventListener("scroll", sync, { passive: true });
+  addEventListener("resize", sync);
+  sync();
+  $("#ctaBarIg").dataset.msg = encodeURIComponent("Oi, Manoel! Vim pelo site e quero fazer uma tattoo.");
+  if (CHANNEL === "wa") $("#ctaBarIg").href = waLink("Oi, Manoel! Vim pelo site e quero fazer uma tattoo.");
 }
