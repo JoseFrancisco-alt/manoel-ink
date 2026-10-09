@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Opções de foto do topo · Manoel.ink</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<style>
+  :root { --paper:#efeef1; --ink:#121212; --red:#d4211c; --muted:#5d5d63; --ease:cubic-bezier(.2,.8,.2,1);
+          --display:"Anton",Impact,sans-serif; --body:"Satoshi",system-ui,sans-serif; --mono:"JetBrains Mono",monospace; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font:400 17px/1.5 var(--body); overflow-x:hidden; }
+  .label { position:sticky; top:0; z-index:20; background:var(--ink); color:var(--paper); padding:14px 28px;
+           font:500 13px var(--mono); letter-spacing:.12em; text-transform:uppercase; display:flex; justify-content:space-between; gap:16px; }
+  .label b { color:#ff5a4e; font-weight:500; }
+  .hero { display:grid; grid-template-columns:1fr 1fr; min-height:640px; padding:0 0 0 48px; overflow:hidden; position:relative; border-bottom:1px solid #c9c8ce; }
+  .txt { align-self:center; position:relative; z-index:3; }
+  .eyebrow { font:500 12px var(--mono); letter-spacing:.12em; color:var(--muted); margin:0 0 16px; }
+  h1 { font:400 clamp(80px,12vw,170px)/.86 var(--display); margin:0 0 26px; }
+  .btn { display:inline-block; background:var(--red); color:#fff; padding:17px 26px; font-weight:700; text-decoration:none; box-shadow:0 14px 30px -12px rgba(212,33,28,.75); }
+  .vis { position:relative; }
+
+  /* ---------- 1. POP-OUT ---------- */
+  .pop .blob { position:absolute; top:-10%; left:6%; width:118%; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 35% 30%,#2a2a2a,var(--ink) 60%); }
+  .pop .stage { position:absolute; left:50%; top:50%; width:min(500px,86%); aspect-ratio:1; translate:-50% -46%; transition:transform .2s linear; transform-style:preserve-3d; }
+  .pop .ring { position:absolute; inset:9% 8% 0 8%; border-radius:50%; border:2px solid var(--red); border-color:var(--red) transparent var(--red) var(--red); animation:spin 14s linear infinite; }
+  .pop .bg { position:absolute; inset:0; background:url(img/v/pop-bg.jpg) center/cover;
+             clip-path:circle(42% at 50% 58%); }
+  .pop .cut { position:absolute; inset:0; background:url(img/v/pop-cut.png) center/cover;
+              -webkit-mask: linear-gradient(#000 0 0) top/100% 50% no-repeat, radial-gradient(circle at 50% 58%, #000 41.7%, transparent 42%);
+                      mask: linear-gradient(#000 0 0) top/100% 50% no-repeat, radial-gradient(circle at 50% 58%, #000 41.7%, transparent 42%);
+              filter:drop-shadow(0 18px 22px rgba(0,0,0,.45)); }
+  @keyframes spin { to { rotate:360deg; } }
+
+  /* ---------- 2. ESTÊNCIL ---------- */
+  .stc .blob { position:absolute; top:-10%; left:6%; width:118%; aspect-ratio:1; border-radius:50%; background:var(--ink); }
+  .stc .stage { position:absolute; left:50%; top:50%; width:min(470px,82%); aspect-ratio:1; translate:-50% -50%; border-radius:50%; overflow:hidden; cursor:crosshair;
+                box-shadow:0 0 0 6px var(--ink), 0 0 0 8px rgba(212,33,28,.9); }
+  .stc .layer { position:absolute; inset:0; background-size:cover; background-position:center; }
+  .stc .ink { background-image:url(img/v/stencil.jpg); }
+  .stc .real { background-image:url(img/v/pop-bg.jpg);
+               -webkit-mask: radial-gradient(circle var(--r,120px) at var(--x,50%) var(--y,40%), #000 60%, transparent 100%);
+                       mask: radial-gradient(circle var(--r,120px) at var(--x,50%) var(--y,40%), #000 60%, transparent 100%); }
+  .stc .hint { position:absolute; left:50%; bottom:-46px; translate:-50% 0; font:500 11px var(--mono); letter-spacing:.14em; color:#ff5a4e; white-space:nowrap; }
+
+  /* ---------- 3. TIPOGRAFIA GIGANTE ---------- */
+  .typ .giant { position:absolute; left:34%; right:0; top:50%; translate:0 -50%; margin:0; z-index:1; pointer-events:none;
+                font:400 clamp(150px,19vw,290px)/.8 var(--display); letter-spacing:-.01em; white-space:nowrap; }
+  .typ .giant span { display:block; }
+  .typ .giant .out { color:transparent; -webkit-text-stroke:2px var(--ink); }
+  .typ .giant .fill { color:var(--ink); }
+  .typ .bar { position:absolute; left:40%; right:-2%; bottom:17%; height:26px; background:var(--red); z-index:1; transform:skewY(-3deg); }
+  .typ .cut { position:absolute; right:-3%; bottom:0; height:82%; z-index:2; transition:translate .25s var(--ease); filter:drop-shadow(-24px 24px 30px rgba(0,0,0,.35)); }
+  .typ .txt { z-index:3; }
+  .typ h1.small { font-size:clamp(60px,7vw,96px); }
+  @media (max-width:860px) {
+    .hero { grid-template-columns:1fr; padding:24px 20px 0; min-height:auto; }
+    .vis { height:110vw; max-height:560px; margin:0 -20px; }
+    .label { padding:12px 18px; font-size:11px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ OPÇÃO 1 ============ -->
+<div class="label"><span><b>Opção 1</b> · "Saindo da moldura"</span><span>cabelo sai do círculo · inclina com o mouse</span></div>
+<section class="hero pop">
+  <div class="txt">
+    <p class="eyebrow">MACEIÓ · AL — STUDIO PRIVADO</p>
+    <h1>JUAN<br>MANOEL</h1>
+    <a class="btn" href="#">Pedir orçamento →</a>
+  </div>
+  <div class="vis" data-tilt>
+    <div class="blob"></div>
+    <div class="stage">
+      <div class="ring"></div>
+      <div class="bg"></div>
+      <div class="cut"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OPÇÃO 2 ============ -->
+<div class="label"><span><b>Opção 2</b> · "Decalque que vira tattoo"</span><span>passa o mouse / o dedo e revela a foto real</span></div>
+<section class="hero stc">
+  <div class="txt">
+    <p class="eyebrow">MACEIÓ · AL — STUDIO PRIVADO</p>
+    <h1>JUAN<br>MANOEL</h1>
+    <a class="btn" href="#">Pedir orçamento →</a>
+  </div>
+  <div class="vis">
+    <div class="blob"></div>
+    <div class="stage" id="stencil">
+      <div class="layer ink"></div>
+      <div class="layer real"></div>
+      <div class="hint">PASSE O MOUSE ↗</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OPÇÃO 3 ============ -->
+<div class="label"><span><b>Opção 3</b> · "Revista / capa de álbum"</span><span>nome gigante atrás · ele na frente, sem círculo</span></div>
+<section class="hero typ">
+  <div class="txt">
+    <p class="eyebrow">MACEIÓ · AL — STUDIO PRIVADO</p>
+    <h1 class="small">TATUADOR<br>EM MACEIÓ</h1>
+    <a class="btn" href="#">Pedir orçamento →</a>
+  </div>
+  <p class="giant"><span class="out">JUAN</span><span class="fill">MANOEL</span></p>
+  <div class="bar"></div>
+  <div class="vis" id="typVis">
+    <img class="cut" src="img/v/type-cut.png" alt="">
+  </div>
+</section>
+
+<script>
+  // 1. tilt 3D
+  document.querySelectorAll("[data-tilt]").forEach((v) => {
+    const st = v.querySelector(".stage");
+    v.addEventListener("mousemove", (e) => {
+      const r = v.getBoundingClientRect(), px = (e.clientX - r.left) / r.width - .5, py = (e.clientY - r.top) / r.height - .5;
+      st.style.transform = `perspective(900px) rotateY(${px * 14}deg) rotateX(${-py * 12}deg)`;
+    });
+    v.addEventListener("mouseleave", () => (st.style.transform = ""));
+  });
+  // 2. lanterna que revela a foto real
+  {
+    const s = document.getElementById("stencil"); let hover = false, t = 0;
+    const set = (x, y, r) => { s.style.setProperty("--x", x + "px"); s.style.setProperty("--y", y + "px"); if (r) s.style.setProperty("--r", r + "px"); };
+    const move = (cx, cy) => { const b = s.getBoundingClientRect(); set(cx - b.left, cy - b.top, b.width * .28); };
+    s.addEventListener("pointermove", (e) => { hover = true; move(e.clientX, e.clientY); });
+    s.addEventListener("pointerleave", () => (hover = false));
+    (function loop() { // sem mouse: a lanterna passeia sozinha
+      if (!hover) { const b = s.getBoundingClientRect(); t += .012;
+        set(b.width * (.5 + .28 * Math.cos(t)), b.height * (.42 + .2 * Math.sin(t * 1.6)), b.width * .26); }
+      requestAnimationFrame(loop);
+    })();
+  }
+  // 3. leve parallax
+  {
+    const v = document.querySelector(".typ"), c = v.querySelector(".cut"), g = v.querySelector(".giant");
+    v.addEventListener("mousemove", (e) => { const r = v.getBoundingClientRect(), px = (e.clientX - r.left) / r.width - .5, py = (e.clientY - r.top) / r.height - .5;
+      c.style.translate = `${px * -18}px ${py * -10}px`; g.style.marginLeft = `${px * 30}px`; });
+  }
+</script>
+</body>
+</html>
