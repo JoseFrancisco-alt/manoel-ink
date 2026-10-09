@@ -11,7 +11,7 @@ const INSTAGRAM = "manoel.ink";
 // post = código do post no Instagram (instagram.com/p/CÓDIGO). Com post, clicar na foto abre o post; sem post, abre a foto ampliada.
 // Fotos tiradas do Instagram @manoel.ink (out/2026). Trocar pelos originais em alta quando ele mandar.
 const WORKS = [
-  { title: "Fechamento blackwork", place: "Antebraço e mão · Cicatrizada",         cat: "blackwork", photos: ["img/t13-1.jpg"], featured: true },
+  { title: "Eevee",              place: "Panturrilha · Fine line",          cat: "geek",      photos: ["img/t14-1.jpg", "img/cicatrizadas/c02.jpg"], featured: true },
   { title: "Blackwork autoral",  place: "Braço · Anime",                    cat: "geek",      photos: ["img/t01-1.jpg", "img/t01-2.jpg"] , post: "DV31Ii9EUGy" },
   { title: "Shenlong",           place: "Antebraço · Anime",                cat: "geek",      photos: ["img/t04-1.jpg"] , post: "DUiZXBIDoiJ" },
   { title: "Dragão",             place: "Antebraço · Blackwork",            cat: "blackwork", photos: ["img/t02-1.jpg"] , post: "DXhLYMLjvkx" },
