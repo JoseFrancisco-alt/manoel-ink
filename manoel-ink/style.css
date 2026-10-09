@@ -693,11 +693,20 @@ img.hero-photo { left: 6%; width: 88%; height: 96%; max-height: none; object-fit
 .faq-map { width: 100%; height: 260px; border: 1.5px solid var(--ink); filter: grayscale(1) contrast(1.05); transition: filter .5s; }
 .faq-map:hover { filter: none; }
 
-/* hero: foto do Manoel em P&B */
-img.hero-photo { filter: grayscale(1) contrast(1.08) brightness(1.02) drop-shadow(0 30px 40px rgba(0,0,0,.35)); }
+/* hero: foto de perfil do Manoel (colorida, a pedido dele) */
+img.hero-photo { filter: drop-shadow(0 30px 40px rgba(0,0,0,.35)); object-position: 50% bottom; }
 
 /* trabalhos que levam pro post do Instagram */
 a.work { text-decoration: none; color: inherit; display: block; }
 a.work.featured { display: flex; }
 .work:not(.has-post) .work-media::after { content: "Ampliar ⤢"; }
 .cursor.label span { font-size: 10px; text-align: center; line-height: 1.2; padding: 0 6px; }
+
+/* foto de perfil (paisagem): dimensiona pela altura e centraliza o rosto na bola */
+img.hero-photo {
+  width: auto; max-width: none; height: min(66svh, 600px);
+  left: 64%; margin-left: calc(min(66svh, 600px) * -0.6); bottom: 0;
+}
+@media (max-width: 860px) {
+  img.hero-photo { height: min(78vw, 430px); left: 55%; margin-left: calc(min(78vw, 430px) * -0.6); width: auto; }
+}
