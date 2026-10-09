@@ -686,3 +686,9 @@ img.hero-photo { left: 6%; width: 88%; height: 96%; max-height: none; object-fit
   font: 500 10px var(--mono); letter-spacing: .12em; text-transform: uppercase; padding: 5px 8px;
 }
 @media (max-width: 860px) { .works { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 12px; } }
+
+/* FAQ: endereço + mapa */
+.faq-place { display: grid; gap: 14px; margin: -6px 0 22px; justify-items: start; }
+.faq-place p { margin: 0 !important; }
+.faq-map { width: 100%; height: 260px; border: 1.5px solid var(--ink); filter: grayscale(1) contrast(1.05); transition: filter .5s; }
+.faq-map:hover { filter: none; }
