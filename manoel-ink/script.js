@@ -8,21 +8,22 @@ const WHATSAPP = "558291471423"; // só números com DDI+DDD, ex.: "558299999999
 const WHATSAPP_LINK = "https://wa.me/message/GXZ2XMQX7ZECF1";
 const INSTAGRAM = "manoel.ink";
 
+// post = código do post no Instagram (instagram.com/p/CÓDIGO). Com post, clicar na foto abre o post; sem post, abre a foto ampliada.
 // Fotos tiradas do Instagram @manoel.ink (out/2026). Trocar pelos originais em alta quando ele mandar.
 const WORKS = [
   { title: "Fechamento blackwork", place: "Antebraço e mão · Cicatrizada",         cat: "blackwork", photos: ["img/t13-1.jpg"], featured: true },
-  { title: "Blackwork autoral",  place: "Braço · Anime",                    cat: "geek",      photos: ["img/t01-1.jpg", "img/t01-2.jpg"] },
-  { title: "Shenlong",           place: "Antebraço · Anime",                cat: "geek",      photos: ["img/t04-1.jpg"] },
-  { title: "Dragão",             place: "Antebraço · Blackwork",            cat: "blackwork", photos: ["img/t02-1.jpg"] },
-  { title: "Homenagem",          place: "Braço · Fine line",                cat: "fineline",  photos: ["img/t03-1.jpg", "img/t03-2.jpg"] },
-  { title: "Anjo caído",         place: "Antebraço · Blackwork + vermelho", cat: "blackwork", photos: ["img/t06-1.jpg"] },
-  { title: "Floral",             place: "Costas · Fine line",               cat: "fineline",  photos: ["img/t07-1.jpg"] },
-  { title: "Kanji",              place: "Antebraço · Lettering",            cat: "fineline",  photos: ["img/t08-1.jpg"] },
-  { title: "CyberTribal",        place: "Mão · Blackwork",                  cat: "blackwork", photos: ["img/t09-1.jpg"] },
-  { title: "Suminagashi",        place: "Antebraço · Blackwork + vermelho", cat: "blackwork", photos: ["img/t10-1.jpg"] },
-  { title: "Amor",               place: "Antebraço · Lettering",            cat: "fineline",  photos: ["img/t11-1.jpg", "img/t11-2.jpg"] },
-  { title: "Máscara oriental",   place: "Antebraço · Oriental",             cat: "geek",      photos: ["img/t12-1.jpg", "img/t12-2.jpg"] },
-  { title: "Homenagem ao BK",    place: "Braço · Retrato",                  cat: "blackwork", photos: ["img/t05-1.jpg"] },
+  { title: "Blackwork autoral",  place: "Braço · Anime",                    cat: "geek",      photos: ["img/t01-1.jpg", "img/t01-2.jpg"] , post: "DV31Ii9EUGy" },
+  { title: "Shenlong",           place: "Antebraço · Anime",                cat: "geek",      photos: ["img/t04-1.jpg"] , post: "DUiZXBIDoiJ" },
+  { title: "Dragão",             place: "Antebraço · Blackwork",            cat: "blackwork", photos: ["img/t02-1.jpg"] , post: "DXhLYMLjvkx" },
+  { title: "Homenagem",          place: "Braço · Fine line",                cat: "fineline",  photos: ["img/t03-1.jpg", "img/t03-2.jpg"] , post: "DVTr9zVjpz8" },
+  { title: "Anjo caído",         place: "Antebraço · Blackwork + vermelho", cat: "blackwork", photos: ["img/t06-1.jpg"] , post: "DXHcC_hkeYZ" },
+  { title: "Floral",             place: "Costas · Fine line",               cat: "fineline",  photos: ["img/t07-1.jpg"] , post: "DbBdXBMpjD5" },
+  { title: "Kanji",              place: "Antebraço · Lettering",            cat: "fineline",  photos: ["img/t08-1.jpg"] , post: "DaacLWNRIax" },
+  { title: "CyberTribal",        place: "Mão · Blackwork",                  cat: "blackwork", photos: ["img/t09-1.jpg"] , post: "DbGezCsJtuM" },
+  { title: "Suminagashi",        place: "Antebraço · Blackwork + vermelho", cat: "blackwork", photos: ["img/t10-1.jpg"] , post: "DUrBuS1Ce-n" },
+  { title: "Amor",               place: "Antebraço · Lettering",            cat: "fineline",  photos: ["img/t11-1.jpg", "img/t11-2.jpg"] , post: "DUf6nIIkWLi" },
+  { title: "Máscara oriental",   place: "Antebraço · Oriental",             cat: "geek",      photos: ["img/t12-1.jpg", "img/t12-2.jpg"] , post: "DUWMxcElLDz" },
+  { title: "Homenagem ao BK",    place: "Braço · Retrato",                  cat: "blackwork", photos: ["img/t05-1.jpg"] , post: "DXR4jnFkVd6" },
 ];
 
 // Do destaque "Cicatrizadas" do Instagram (stories, formato 9:16).
@@ -69,7 +70,7 @@ navLinks.addEventListener("click", (e) => {
 /* trabalhos */
 const worksEl = $("#works");
 worksEl.innerHTML = WORKS.map((w, i) => `
-  <button class="work reveal${w.featured ? " featured" : ""}" data-cat="${w.cat}" data-i="${i}">
+  <${w.post ? `a href="https://www.instagram.com/p/${w.post}/" target="_blank" rel="noopener" aria-label="${w.title}: ver post no Instagram"` : "button"} class="work reveal${w.featured ? " featured" : ""}${w.post ? " has-post" : ""}" data-cat="${w.cat}" data-i="${i}">
     <div class="work-media">
       ${w.photos.length > 1 ? `<span class="work-count">1/${w.photos.length}</span>` : ""}
       ${w.featured ? `<span class="work-badge">Destaque</span>` : ""}
@@ -77,7 +78,7 @@ worksEl.innerHTML = WORKS.map((w, i) => `
     </div>
     <h3>${w.title}</h3>
     <p>${w.place}</p>
-  </button>`).join("");
+  </${w.post ? "a" : "button"}>`).join("");
 
 function updateCount() {
   const n = worksEl.querySelectorAll(".work:not(.hide)").length;
@@ -124,7 +125,7 @@ function step(d) {
 }
 worksEl.addEventListener("click", (e) => {
   const card = e.target.closest(".work");
-  if (!card) return;
+  if (!card || card.classList.contains("has-post")) return; // com post: o link abre o Instagram
   cur = { work: +card.dataset.i, photo: 0 };
   renderLb();
   lb.hidden = false;
@@ -335,7 +336,7 @@ if (finePointer && !reduce) {
   let x = innerWidth / 2, y = innerHeight / 2, cx = x, cy = y;
   addEventListener("mousemove", (e) => { x = e.clientX; y = e.clientY; dot.style.transform = `translate(${x}px,${y}px)`; });
   (function loop() { cx += (x - cx) * 0.18; cy += (y - cy) * 0.18; c.style.transform = `translate(${cx}px,${cy}px)`; requestAnimationFrame(loop); })();
-  document.querySelectorAll(".work").forEach((el) => (el.dataset.cursor = "Ver"));
+  document.querySelectorAll(".work").forEach((el) => (el.dataset.cursor = el.classList.contains("has-post") ? "Ver no Insta" : "Ampliar"));
   document.querySelectorAll(".flash:not(.reserved)").forEach((el) => (el.dataset.cursor = "Quero"));
   document.addEventListener("mouseover", (e) => {
     const lab = e.target.closest("[data-cursor]");

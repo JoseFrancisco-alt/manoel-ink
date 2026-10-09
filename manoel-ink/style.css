@@ -695,3 +695,9 @@ img.hero-photo { left: 6%; width: 88%; height: 96%; max-height: none; object-fit
 
 /* hero: foto do Manoel em P&B */
 img.hero-photo { filter: grayscale(1) contrast(1.08) brightness(1.02) drop-shadow(0 30px 40px rgba(0,0,0,.35)); }
+
+/* trabalhos que levam pro post do Instagram */
+a.work { text-decoration: none; color: inherit; display: block; }
+a.work.featured { display: flex; }
+.work:not(.has-post) .work-media::after { content: "Ampliar ⤢"; }
+.cursor.label span { font-size: 10px; text-align: center; line-height: 1.2; padding: 0 6px; }
