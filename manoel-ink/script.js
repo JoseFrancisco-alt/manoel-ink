@@ -488,9 +488,11 @@ document.querySelectorAll("[data-count]").forEach((el) => countIO.observe(el));
     const x0 = Math.max(L, 0), y0 = Math.max(T, 0);
     const x1 = Math.min(L + D, W), y1 = Math.min(T + D, H);
     const vw = x1 - x0, vh = y1 - y0;
-    const mobile = innerWidth <= 860;
-    const P = mobile ? vw * 0.84 : Math.min(vw, vh) * 0.82;            // diâmetro da foto
-    const cx = x0 + vw / 2 + (mobile ? vw * 0.07 : vw * 0.02), cy = y0 + vh / 2;
+    const mobile = innerWidth <= 860, V = innerWidth;
+    // celular: posição fixa da foto (proporcional à tela), dentro da bola gigante do canto
+    const P = mobile ? V * 0.34 : Math.min(vw, vh) * 0.82;            // diâmetro da foto
+    const cx = mobile ? V * 0.80 - hv.offsetLeft : x0 + vw / 2 + vw * 0.02;
+    const cy = mobile ? V * 0.42 : y0 + vh / 2;
     Object.assign(img.style, { left: (cx - P / 2) + "px", top: (cy - P / 2) + "px", width: P + "px", height: P + "px", margin: "0", right: "auto", bottom: "auto" });
     const A = P * 1.1;
     Object.assign(arc.style, { left: (cx - A / 2) + "px", top: (cy - A / 2) + "px", width: A + "px", height: A + "px" });
@@ -498,7 +500,12 @@ document.querySelectorAll("[data-count]").forEach((el) => countIO.observe(el));
     const title = document.querySelector(".hero-title"), sub = document.querySelector(".hero-sub");
     title.style.marginBottom = "";
     if (mobile && sub) {
-      const orbBottom = hv.getBoundingClientRect().top + T + D;
+      // ponto mais baixo da bola que aparece na tela (na borda direita, já que o centro fica fora)
+      // medidas sem transform (a bola tem animação de entrada em scale)
+      const hb = hv.getBoundingClientRect(), R = orb.offsetWidth / 2;
+      const ocx = hb.left + orb.offsetLeft + R, ocy = hb.top + orb.offsetTop + R;
+      const dx = Math.max(0, ocx - V);
+      const orbBottom = dx < R ? ocy + Math.sqrt(R * R - dx * dx) : ocy + R;
       const gap = orbBottom + 14 - sub.getBoundingClientRect().top;
       if (gap > 0) title.style.marginBottom = (20 + gap) + "px";
     }
