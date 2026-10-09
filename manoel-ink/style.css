@@ -431,12 +431,6 @@ body.loading { overflow: hidden; }
 [data-blur].in .w { filter: none; opacity: 1; transform: none; }
 
 /* hero extras */
-.rays {
-  position: absolute; top: -20%; left: -10%; width: 140%; aspect-ratio: 1; pointer-events: none;
-  background: repeating-conic-gradient(from 0deg at 50% 50%, rgba(212,33,28,.0) 0deg 9deg, rgba(212,33,28,.09) 10deg 12deg, rgba(212,33,28,0) 13deg 22deg);
-  -webkit-mask: radial-gradient(circle, #000 20%, transparent 62%); mask: radial-gradient(circle, #000 20%, transparent 62%);
-  animation: spin 80s linear infinite reverse;
-}
 .orb, .orb-tag, .badge-spin, .hero-photo { will-change: transform; }
 .badge-spin {
   position: absolute; left: -2%; top: 4%; width: 120px; z-index: 3;
