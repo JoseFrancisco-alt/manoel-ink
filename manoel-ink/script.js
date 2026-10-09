@@ -31,7 +31,6 @@ const HEALED = [
   { name: "Eevee",     place: "Panturrilha",  src: "img/cicatrizadas/c02.jpg", before: "img/cicatrizadas/c02-dia.jpg" },
   { name: "Floral",    place: "Costela",      src: "img/cicatrizadas/c03.jpg", before: "img/cicatrizadas/c03-dia.jpg" },
   { name: "Lucario",   place: "Panturrilha",  src: "img/cicatrizadas/c04.jpg", before: "img/cicatrizadas/c04-dia.jpg" },
-  { name: "Sol e lua", place: "Antebraço",    src: "img/cicatrizadas/c05.jpg", before: "" },
   { name: "Kazutora",  place: "Antebraço",    src: "img/cicatrizadas/c06.jpg", before: "img/cicatrizadas/c06-dia.jpg" },
 ];
 
