@@ -660,3 +660,18 @@ body.has-cursor .story-compare input { cursor: none; }
   .btn-hero { padding: 18px 22px; }
 }
 @media (prefers-reduced-motion: reduce) { .btn-cta::after { animation: none; } }
+
+/* retrato do Sobre */
+.about-img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; filter: grayscale(1) contrast(1.05); transition: filter .6s var(--ease); }
+.about-photo:hover .about-img { filter: grayscale(0); }
+/* barra do celular: ícone certo por canal */
+.ch-wa .cta-bar-ig svg { display: none; }
+.ch-wa .cta-bar-ig::before { content: ""; width: 24px; height: 24px; background: #fff;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z'/%3E%3C/svg%3E") center/contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z'/%3E%3C/svg%3E") center/contain no-repeat; }
+
+/* foto real do Manoel no hero (recorte sem fundo) */
+img.hero-photo { left: 6%; width: 88%; height: 96%; max-height: none; object-fit: contain; object-position: 60% bottom; filter: drop-shadow(0 30px 40px rgba(0,0,0,.35)); }
+@media (max-width: 860px) { img.hero-photo { left: 4%; width: 92%; height: 94%; } }
+.orb-tag { top: 6%; right: 3%; }
+@media (max-width: 860px) { .orb-tag { display: none; } }

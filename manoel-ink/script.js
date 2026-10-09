@@ -3,7 +3,9 @@
    e preencha "photos" com os caminhos (ex.: "img/t01-1.jpg").
    Lista vazia = mostra o placeholder.
    ========================================================= */
-const WHATSAPP = ""; // só números com DDI+DDD, ex.: "5582999999999". Vazio = contato vai pro direct do Instagram.
+const WHATSAPP = ""; // só números com DDI+DDD, ex.: "5582999999999" — abre o WhatsApp já com a mensagem escrita.
+// Link curto do WhatsApp Business (wa.me/message/...). Não aceita texto, então a mensagem é copiada no clique.
+const WHATSAPP_LINK = "https://wa.me/message/GXZ2XMQX7ZECF1";
 const INSTAGRAM = "manoel.ink";
 
 // Fotos tiradas do Instagram @manoel.ink (out/2026). Trocar pelos originais em alta quando ele mandar.
@@ -26,11 +28,11 @@ const WORKS = [
 // before: foto do dia da sessão (ex.: "img/cicatrizadas/c02-dia.jpg"). Preenchida = o card vira antes/depois com barra de arrastar.
 const HEALED = [
   { name: "Blackwork", place: "Braço e mão",  src: "img/cicatrizadas/c01.jpg", before: "" },
-  { name: "Eevee",     place: "Panturrilha",  src: "img/cicatrizadas/c02.jpg", before: "" },
-  { name: "Floral",    place: "Costela",      src: "img/cicatrizadas/c03.jpg", before: "" },
-  { name: "Lucario",   place: "Panturrilha",  src: "img/cicatrizadas/c04.jpg", before: "" },
+  { name: "Eevee",     place: "Panturrilha",  src: "img/cicatrizadas/c02.jpg", before: "img/cicatrizadas/c02-dia.jpg" },
+  { name: "Floral",    place: "Costela",      src: "img/cicatrizadas/c03.jpg", before: "img/cicatrizadas/c03-dia.jpg" },
+  { name: "Lucario",   place: "Panturrilha",  src: "img/cicatrizadas/c04.jpg", before: "img/cicatrizadas/c04-dia.jpg" },
   { name: "Sol e lua", place: "Antebraço",    src: "img/cicatrizadas/c05.jpg", before: "" },
-  { name: "Kazutora",  place: "Antebraço",    src: "img/cicatrizadas/c06.jpg", before: "" },
+  { name: "Kazutora",  place: "Antebraço",    src: "img/cicatrizadas/c06.jpg", before: "img/cicatrizadas/c06-dia.jpg" },
 ];
 
 // Do destaque "Disponíveis" do Instagram. size/price vazios = não aparece no card.
@@ -42,11 +44,13 @@ const FLASHES = [
 /* ========================================================= */
 
 const $ = (s, el = document) => el.querySelector(s);
-const CHANNEL = WHATSAPP ? "wa" : "ig";
+const CHANNEL = (WHATSAPP || WHATSAPP_LINK) ? "wa" : "ig";
+const NEEDS_COPY = !WHATSAPP; // link sem texto pré-preenchido (link curto do WA ou direct do IG)
 document.documentElement.classList.add(`ch-${CHANNEL}`);
 // WhatsApp aceita texto no link; o direct do Instagram não, então lá a mensagem é copiada no clique.
-const waLink = (text) => CHANNEL === "wa"
-  ? `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`
+const waLink = (text) =>
+  WHATSAPP ? `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`
+  : WHATSAPP_LINK ? WHATSAPP_LINK
   : `https://ig.me/m/${INSTAGRAM}`;
 const msgAttr = (text) => `data-msg="${encodeURIComponent(text)}"`;
 const media = (src, label) => src
@@ -259,11 +263,13 @@ function toast(html) {
   toastTimer = setTimeout(() => el.classList.remove("show"), 4500);
 }
 document.addEventListener("click", (e) => {
-  if (CHANNEL !== "ig") return;
+  if (!NEEDS_COPY) return;
   const a = e.target.closest("[data-msg]");
   if (!a) return;
   copyText(decodeURIComponent(a.dataset.msg));
-  toast(`<b>Mensagem copiada!</b> No direct do @${INSTAGRAM}, é só colar e enviar.`);
+  toast(CHANNEL === "wa"
+    ? `<b>Mensagem copiada!</b> Quando abrir a conversa com o Manoel no WhatsApp, é só colar e enviar.`
+    : `<b>Mensagem copiada!</b> No direct do @${INSTAGRAM}, é só colar e enviar.`);
 });
 
 /* reveal on scroll */
