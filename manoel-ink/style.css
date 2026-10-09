@@ -710,3 +710,10 @@ img.hero-photo {
 @media (max-width: 860px) {
   img.hero-photo { height: min(78vw, 430px); left: 55%; margin-left: calc(min(78vw, 430px) * -0.6); width: auto; }
 }
+
+/* Sobre: dois parágrafos */
+.about-text .lead { margin-bottom: 16px; }
+.about-text .lead-2 { margin-bottom: 36px; color: var(--muted); }
+.about-photo { overflow: hidden; }
+.about-img { filter: none; transition: transform .8s var(--ease); }
+.about-photo:hover .about-img { filter: none; transform: scale(1.03); }
