@@ -475,3 +475,26 @@ document.querySelectorAll("[data-count]").forEach((el) => countIO.observe(el));
   $("#ctaBarIg").dataset.msg = encodeURIComponent("Oi, Manoel! Vim pelo site e quero fazer uma tattoo.");
   if (CHANNEL === "wa") $("#ctaBarIg").href = waLink("Oi, Manoel! Vim pelo site e quero fazer uma tattoo.");
 }
+
+/* foto do hero: centralizada na bola, em qualquer tamanho de tela */
+{
+  const hv = $("#heroVisual"), orb = hv && hv.querySelector(".orb");
+  const place = () => {
+    const img = hv && hv.querySelector("img.hero-photo");
+    if (!img || !img.naturalWidth) return;
+    // parte VISÍVEL da bola (ela é cortada pelas bordas do hero conforme a tela)
+    const D = orb.offsetWidth, L = orb.offsetLeft, T = orb.offsetTop;
+    const x0 = Math.max(L, 0), y0 = Math.max(T, 0);
+    const x1 = Math.min(L + D, hv.offsetWidth), y1 = Math.min(T + D, hv.offsetHeight);
+    const vw = x1 - x0, vh = y1 - y0, ratio = img.naturalWidth / img.naturalHeight;
+    const h = Math.min(vh * 0.86, (vw * 0.95) / ratio), w = h * ratio;
+    const cx = x0 + vw / 2, cy = y0 + vh / 2 + vh * 0.03;
+    Object.assign(img.style, {
+      height: h + "px", width: w + "px", margin: "0", bottom: "auto",
+      left: (cx - w * 0.5) + "px", top: (cy - h * 0.5) + "px",
+    });
+  };
+  const img = hv && hv.querySelector("img.hero-photo");
+  if (img) { img.complete ? place() : img.addEventListener("load", place); }
+  addEventListener("resize", place);
+}
