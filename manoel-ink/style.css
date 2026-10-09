@@ -737,12 +737,8 @@ img.hero-photo { box-shadow: 0 0 0 6px #121212, 0 0 0 7px rgba(255,255,255,.08),
   .hero-visual .badge-spin { display: none; }
 }
 
-/* foto do hero: bordas desfocadas, dissolvendo no preto da bola */
-img.hero-photo {
-  box-shadow: none;
-  -webkit-mask: radial-gradient(circle closest-side, #000 62%, rgba(0,0,0,.6) 80%, transparent 100%);
-          mask: radial-gradient(circle closest-side, #000 62%, rgba(0,0,0,.6) 80%, transparent 100%);
-}
+/* foto do hero: círculo nítido (sem desfoque), com anel escuro fino */
+img.hero-photo { -webkit-mask: none; mask: none; box-shadow: 0 0 0 5px #121212, 0 0 0 6px rgba(255,255,255,.08), 0 24px 50px -12px rgba(0,0,0,.6); }
 
 /* Sobre: frase de destaque + chamada */
 .about-quote {

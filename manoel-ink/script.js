@@ -490,11 +490,11 @@ document.querySelectorAll("[data-count]").forEach((el) => countIO.observe(el));
     const vw = x1 - x0, vh = y1 - y0;
     const mobile = innerWidth <= 860, V = innerWidth;
     // celular: posição fixa da foto (proporcional à tela), dentro da bola gigante do canto
-    const P = mobile ? V * 0.5 : Math.min(vw, vh) * 0.95;             // diâmetro da foto (a borda some no preto)
-    const cx = mobile ? V * 0.78 - hv.offsetLeft : x0 + vw / 2 + vw * 0.02;
-    const cy = mobile ? V * 0.37 : y0 + vh / 2;
+    const P = mobile ? V * 0.44 : Math.min(vw, vh) * 0.82;            // diâmetro da foto
+    const cx = mobile ? V * 0.77 - hv.offsetLeft : x0 + vw / 2 + vw * 0.02;
+    const cy = mobile ? V * 0.36 : y0 + vh / 2;
     Object.assign(img.style, { left: (cx - P / 2) + "px", top: (cy - P / 2) + "px", width: P + "px", height: P + "px", margin: "0", right: "auto", bottom: "auto" });
-    const A = P * (mobile ? 0.98 : 0.96);   // arco vermelho logo na borda onde a foto se dissolve
+    const A = P * 1.1;                      // arco vermelho em volta da foto
     Object.assign(arc.style, { left: (cx - A / 2) + "px", top: (cy - A / 2) + "px", width: A + "px", height: A + "px" });
     // celular: o texto de baixo só começa depois que a bola preta termina
     const title = document.querySelector(".hero-title"), sub = document.querySelector(".hero-sub");
