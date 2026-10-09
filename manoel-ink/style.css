@@ -743,3 +743,12 @@ img.hero-photo {
   -webkit-mask: radial-gradient(circle closest-side, #000 62%, rgba(0,0,0,.6) 80%, transparent 100%);
           mask: radial-gradient(circle closest-side, #000 62%, rgba(0,0,0,.6) 80%, transparent 100%);
 }
+
+/* Sobre: frase de destaque + chamada */
+.about-quote {
+  margin: 4px 0 22px; padding-left: 16px; border-left: 4px solid var(--red);
+  font: 400 clamp(28px, 3.4vw, 44px)/1.02 var(--display); text-transform: uppercase; letter-spacing: .01em;
+}
+.about-quote em { font-style: normal; color: var(--red); }
+.about-cta { color: var(--red); font-weight: 700; text-decoration: none; white-space: nowrap; border-bottom: 1.5px solid currentColor; }
+.about-cta:hover { color: var(--ink); }
