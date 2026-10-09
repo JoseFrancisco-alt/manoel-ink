@@ -488,10 +488,10 @@ document.querySelectorAll("[data-count]").forEach((el) => countIO.observe(el));
     const x0 = Math.max(L, 0), y0 = Math.max(T, 0);
     const x1 = Math.min(L + D, W), y1 = Math.min(T + D, H);
     const vw = x1 - x0, vh = y1 - y0;
-    const P = Math.min(vw, vh) * (innerWidth > 860 ? 0.7 : 0.74);   // diâmetro da foto
+    const P = Math.min(vw, vh) * (innerWidth > 860 ? 0.82 : 0.84);   // diâmetro da foto
     const cx = x0 + vw / 2 + (innerWidth > 860 ? vw * 0.02 : 0), cy = y0 + vh / 2;
     Object.assign(img.style, { left: (cx - P / 2) + "px", top: (cy - P / 2) + "px", width: P + "px", height: P + "px", margin: "0", right: "auto", bottom: "auto" });
-    const A = P * 1.16;
+    const A = P * 1.1;
     Object.assign(arc.style, { left: (cx - A / 2) + "px", top: (cy - A / 2) + "px", width: A + "px", height: A + "px" });
   };
   place();
