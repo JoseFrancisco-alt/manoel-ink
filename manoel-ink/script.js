@@ -3,13 +3,14 @@
    e preencha "photos" com os caminhos (ex.: "img/t01-1.jpg").
    Lista vazia = mostra o placeholder.
    ========================================================= */
-const WHATSAPP = ""; // só números com DDI+DDD, ex.: "5582999999999" — abre o WhatsApp já com a mensagem escrita.
+const WHATSAPP = "558291471423"; // só números com DDI+DDD, ex.: "5582999999999" — abre o WhatsApp já com a mensagem escrita.
 // Link curto do WhatsApp Business (wa.me/message/...). Não aceita texto, então a mensagem é copiada no clique.
 const WHATSAPP_LINK = "https://wa.me/message/GXZ2XMQX7ZECF1";
 const INSTAGRAM = "manoel.ink";
 
 // Fotos tiradas do Instagram @manoel.ink (out/2026). Trocar pelos originais em alta quando ele mandar.
 const WORKS = [
+  { title: "Fechamento blackwork", place: "Antebraço e mão · Cicatrizada",         cat: "blackwork", photos: ["img/t13-1.jpg"], featured: true },
   { title: "Blackwork autoral",  place: "Braço · Anime",                    cat: "geek",      photos: ["img/t01-1.jpg", "img/t01-2.jpg"] },
   { title: "Shenlong",           place: "Antebraço · Anime",                cat: "geek",      photos: ["img/t04-1.jpg"] },
   { title: "Dragão",             place: "Antebraço · Blackwork",            cat: "blackwork", photos: ["img/t02-1.jpg"] },
@@ -27,7 +28,6 @@ const WORKS = [
 // Do destaque "Cicatrizadas" do Instagram (stories, formato 9:16).
 // before: foto do dia da sessão (ex.: "img/cicatrizadas/c02-dia.jpg"). Preenchida = o card vira antes/depois com barra de arrastar.
 const HEALED = [
-  { name: "Blackwork", place: "Braço e mão",  src: "img/cicatrizadas/c01.jpg", before: "" },
   { name: "Eevee",     place: "Panturrilha",  src: "img/cicatrizadas/c02.jpg", before: "img/cicatrizadas/c02-dia.jpg" },
   { name: "Floral",    place: "Costela",      src: "img/cicatrizadas/c03.jpg", before: "img/cicatrizadas/c03-dia.jpg" },
   { name: "Lucario",   place: "Panturrilha",  src: "img/cicatrizadas/c04.jpg", before: "img/cicatrizadas/c04-dia.jpg" },
@@ -70,9 +70,10 @@ navLinks.addEventListener("click", (e) => {
 /* trabalhos */
 const worksEl = $("#works");
 worksEl.innerHTML = WORKS.map((w, i) => `
-  <button class="work reveal" data-cat="${w.cat}" data-i="${i}">
+  <button class="work reveal${w.featured ? " featured" : ""}" data-cat="${w.cat}" data-i="${i}">
     <div class="work-media">
       ${w.photos.length > 1 ? `<span class="work-count">1/${w.photos.length}</span>` : ""}
+      ${w.featured ? `<span class="work-badge">Destaque</span>` : ""}
       ${media(w.photos[0], "Foto")}
     </div>
     <h3>${w.title}</h3>
@@ -236,6 +237,9 @@ fFile.addEventListener("change", () => {
 });
 buildMsg();
 $("#waFooter").href = waLink("Oi, Manoel!");
+if (CHANNEL === "wa" && !NEEDS_COPY) {
+  $("#waNote").innerHTML = `A mensagem <b>já abre escrita</b> no WhatsApp do Manoel, é só enviar. Prefere o Instagram? <a href="https://ig.me/m/${INSTAGRAM}" target="_blank" rel="noopener">Chama no direct</a>`;
+}
 {
   const hi = "Oi, Manoel! Vim pelo site e quero fazer uma tattoo.";
   $("#waFloat").href = waLink(hi);
