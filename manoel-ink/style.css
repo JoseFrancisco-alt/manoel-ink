@@ -717,3 +717,9 @@ img.hero-photo {
 .about-photo { overflow: hidden; }
 .about-img { filter: none; transition: transform .8s var(--ease); }
 .about-photo:hover .about-img { filter: none; transform: scale(1.03); }
+
+/* hero: foto redonda = a própria bola */
+img.hero-photo { border-radius: 50%; object-fit: cover; object-position: center; max-width: none; max-height: none; filter: none; animation: orbIn 1.4s var(--ease) both; }
+.hero-visual .orb { aspect-ratio: auto; box-shadow: 0 30px 60px -20px rgba(0,0,0,.45); }
+.hero-visual .arc { aspect-ratio: auto; }
+@media (max-width: 860px) { .hero-visual { height: min(100vw, 560px); } }
