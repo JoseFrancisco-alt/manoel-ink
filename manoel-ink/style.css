@@ -714,6 +714,10 @@ img.hero-photo {
 
 /* hero: foto redonda = a própria bola */
 img.hero-photo { border-radius: 50%; object-fit: cover; object-position: center; max-width: none; max-height: none; filter: none; animation: orbIn 1.4s var(--ease) both; }
-.hero-visual .orb { aspect-ratio: auto; box-shadow: 0 30px 60px -20px rgba(0,0,0,.45); }
+.hero-visual .orb { aspect-ratio: 1; }
 .hero-visual .arc { aspect-ratio: auto; }
 @media (max-width: 860px) { .hero-visual { height: min(100vw, 560px); } }
+
+/* foto redonda dentro da bola preta: anel fino e sombra pra destacar */
+img.hero-photo { box-shadow: 0 0 0 6px #121212, 0 0 0 7px rgba(255,255,255,.08), 0 30px 60px -10px rgba(0,0,0,.7); }
+.hero-visual .arc { color: var(--red); z-index: 3; }

@@ -476,20 +476,22 @@ document.querySelectorAll("[data-count]").forEach((el) => countIO.observe(el));
   if (CHANNEL === "wa") $("#ctaBarIg").href = waLink("Oi, Manoel! Vim pelo site e quero fazer uma tattoo.");
 }
 
-/* hero: bola inteira na tela, com a foto redonda preenchendo ela (sem bordas cortadas) */
+/* hero: bola preta grande ao fundo (cortada pelas bordas, como no wireframe)
+   e a foto redonda centralizada na parte visível dela */
 {
   const hv = $("#heroVisual"), orb = hv && hv.querySelector(".orb"), arc = hv && hv.querySelector(".arc");
   const place = () => {
     const img = hv && hv.querySelector("img.hero-photo");
     if (!img) return;
     const W = hv.offsetWidth, H = hv.offsetHeight;
-    const D = Math.min(W * 0.97, H * 0.84);
-    const cx = W * (innerWidth > 860 ? 0.5 : 0.5), cy = H / 2;
-    const L = cx - D / 2, T = cy - D / 2;
-    const box = { left: L + "px", top: T + "px", width: D + "px", height: D + "px", margin: "0", right: "auto", bottom: "auto" };
-    Object.assign(orb.style, box);
-    Object.assign(img.style, box);
-    const A = D * 1.1;
+    const D = orb.offsetWidth, L = orb.offsetLeft, T = orb.offsetTop;
+    const x0 = Math.max(L, 0), y0 = Math.max(T, 0);
+    const x1 = Math.min(L + D, W), y1 = Math.min(T + D, H);
+    const vw = x1 - x0, vh = y1 - y0;
+    const P = Math.min(vw, vh) * (innerWidth > 860 ? 0.7 : 0.74);   // diâmetro da foto
+    const cx = x0 + vw / 2 + (innerWidth > 860 ? vw * 0.02 : 0), cy = y0 + vh / 2;
+    Object.assign(img.style, { left: (cx - P / 2) + "px", top: (cy - P / 2) + "px", width: P + "px", height: P + "px", margin: "0", right: "auto", bottom: "auto" });
+    const A = P * 1.16;
     Object.assign(arc.style, { left: (cx - A / 2) + "px", top: (cy - A / 2) + "px", width: A + "px", height: A + "px" });
   };
   place();
